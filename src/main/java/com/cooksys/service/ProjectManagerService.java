@@ -1,19 +1,18 @@
 package com.cooksys.service;
 
-import java.util.Collection;
-
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
-import com.cooksys.dto.ProjectDto;
+import com.cooksys.dto.OverdueProjectsDto;
 import com.cooksys.dto.ProjectManagerDto;
 import com.cooksys.entity.Project;
 import com.cooksys.entity.ProjectManager;
 import com.cooksys.exception.ReferencedEntityNotFoundException;
 import com.cooksys.mapper.ProjectManagerMapper;
+import com.cooksys.mapper.ProjectMapper;
 import com.cooksys.repository.ProjectManagerRepository;
 import com.cooksys.repository.ProjectRepository;
 
@@ -22,15 +21,18 @@ public class ProjectManagerService {
 
 	private ProjectManagerRepository repo;
 	private ProjectRepository projectRepo;
-	private ProjectManagerMapper mapper;
+	private ProjectManagerMapper managerMapper;
+	private ProjectMapper projectMapper;
 
-	public ProjectManagerService(ProjectManagerRepository repo, ProjectManagerMapper mapper) {
+	public ProjectManagerService(ProjectManagerRepository repo, ProjectRepository projectRepo, ProjectManagerMapper managerMapper, ProjectMapper projectMapper) {
 		this.repo = repo;
-		this.mapper = mapper;
+		this.projectRepo = projectRepo;
+		this.managerMapper = managerMapper;
+		this.projectMapper = projectMapper;
 	}
 	
 	public List<ProjectManagerDto> getAll() {
-		return repo.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+		return repo.findAll().stream().map(managerMapper::toDto).collect(Collectors.toList());
 	}
 
 	public boolean has(Long id) {
@@ -39,18 +41,18 @@ public class ProjectManagerService {
 
 	public ProjectManagerDto get(Long id) {
 		mustExist(id);
-		return mapper.toDto(repo.findOne(id));
+		return managerMapper.toDto(repo.findOne(id));
 	}
 
 	public Long post(ProjectManagerDto projectManagerDto) {
 		projectManagerDto.setId(null);
-		return repo.save(mapper.toEntity(projectManagerDto)).getId();
+		return repo.save(managerMapper.toEntity(projectManagerDto)).getId();
 	}
 
 	public void put(Long id, ProjectManagerDto projectManagerDto) {
 		mustExist(id);
 		projectManagerDto.setId(id);
-		repo.save(mapper.toEntity(projectManagerDto));
+		repo.save(managerMapper.toEntity(projectManagerDto));
 	}
 	
 	private void mustExist(Long id) {
@@ -67,7 +69,11 @@ public class ProjectManagerService {
 		return projectRepo.findAllByProjectManagerId(projectManagerId);
 		
 	}
-	
+
+	public OverdueProjectsDto getNoOfOverdueProjects(Long projectManagerId) {
+		return new OverdueProjectsDto(projectManagerId, (long) projectRepo.findByProjectManagerIdAndDueDateLessThan(projectManagerId, new Date()).size());
+		
+	}
 	
 	
 }

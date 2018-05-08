@@ -48,7 +48,6 @@ public class ProjectService {
 	}
 
 	public List<Project> findOverdueProjects() {
-		// TODO Auto-generated method stub
 		return repo.findByDueDateLessThan(new Date());
 	}
 

@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.dto.OverdueProjectsDto;
 import com.cooksys.dto.ProjectDto;
 import com.cooksys.dto.ProjectManagerDto;
+import com.cooksys.mapper.OverdueProjectsMapper;
 import com.cooksys.mapper.ProjectManagerMapper;
 import com.cooksys.mapper.ProjectMapper;
 import com.cooksys.service.ProjectManagerService;
@@ -63,6 +66,11 @@ public class ProjectManagerController {
 		return projectManagerService.getProjects(projectManagerId).stream().map(projectMapper::toDto).collect(Collectors.toList());
 	}
 
+	@GetMapping("{id}/overdue")
+	public OverdueProjectsDto getNoOfProjects(@PathVariable("id") Long projectManagerId) {
+		return projectManagerService.getNoOfOverdueProjects(projectManagerId);
+	}
+	
 	@PostMapping
 	@ApiOperation(value = "", nickname = "postNewProjectManager")
 	public Long post(@RequestBody @Validated ProjectManagerDto projectManagerDto, HttpServletResponse httpResponse) {
