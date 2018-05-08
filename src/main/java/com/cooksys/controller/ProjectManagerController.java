@@ -1,6 +1,7 @@
 package com.cooksys.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cooksys.dto.ProjectDto;
 import com.cooksys.dto.ProjectManagerDto;
+import com.cooksys.mapper.ProjectManagerMapper;
+import com.cooksys.mapper.ProjectMapper;
 import com.cooksys.service.ProjectManagerService;
 
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +29,14 @@ import io.swagger.annotations.ApiOperation;
 public class ProjectManagerController {
 
 	private ProjectManagerService projectManagerService;
+	private ProjectManagerMapper projectManagerMapper;
+	private ProjectMapper projectMapper;
 
-	public ProjectManagerController(ProjectManagerService projectManagerService) {
+	public ProjectManagerController(ProjectManagerService projectManagerService,
+			ProjectManagerMapper projectManagerMapper, ProjectMapper projectMapper) {
 		this.projectManagerService = projectManagerService;
+		this.projectManagerMapper = projectManagerMapper;
+		this.projectMapper = projectMapper;
 	}
 	
 	@GetMapping
@@ -47,6 +56,11 @@ public class ProjectManagerController {
 	@ApiOperation(value = "", nickname = "getProjectManagerById")
 	public ProjectManagerDto get(@PathVariable Long id) {
 		return projectManagerService.get(id);
+	}
+	
+	@GetMapping("{id}/project")
+	private List<ProjectDto> getProjects(@PathVariable("id") Long projectManagerId){
+		return projectManagerService.getProjects(projectManagerId).stream().map(projectMapper::toDto).collect(Collectors.toList());
 	}
 
 	@PostMapping

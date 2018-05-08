@@ -1,20 +1,27 @@
 package com.cooksys.service;
 
+import java.util.Collection;
+
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
+import com.cooksys.dto.ProjectDto;
 import com.cooksys.dto.ProjectManagerDto;
+import com.cooksys.entity.Project;
 import com.cooksys.entity.ProjectManager;
 import com.cooksys.exception.ReferencedEntityNotFoundException;
 import com.cooksys.mapper.ProjectManagerMapper;
 import com.cooksys.repository.ProjectManagerRepository;
+import com.cooksys.repository.ProjectRepository;
 
 @Service
 public class ProjectManagerService {
 
 	private ProjectManagerRepository repo;
+	private ProjectRepository projectRepo;
 	private ProjectManagerMapper mapper;
 
 	public ProjectManagerService(ProjectManagerRepository repo, ProjectManagerMapper mapper) {
@@ -55,4 +62,12 @@ public class ProjectManagerService {
 		mustExist(id);
 		repo.delete(id);
 	}
+
+	public List<Project> getProjects(Long projectManagerId) {
+		return projectRepo.findAllByManagerId(projectManagerId);
+		
+	}
+	
+	
+	
 }
