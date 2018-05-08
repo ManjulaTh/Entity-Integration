@@ -1,8 +1,6 @@
 package com.cooksys.entity;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -22,7 +20,7 @@ public class Project implements BaseEntity<Long>  {
 	private Long id;
 	
 	@ManyToOne
-	private ProjectManager manager;
+	private ProjectManager projectManager;
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
@@ -37,16 +35,15 @@ public class Project implements BaseEntity<Long>  {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	
-	public ProjectManager getManager() {
-		return manager;
+	public ProjectManager getProjectManager() {
+		return projectManager;
 	}
 
-	public void setManager(ProjectManager manager) {
-		this.manager = manager;
+	public void setProjectManager(ProjectManager projectManager) {
+		this.projectManager = projectManager;
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}

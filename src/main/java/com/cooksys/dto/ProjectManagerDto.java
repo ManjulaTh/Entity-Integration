@@ -1,6 +1,5 @@
 package com.cooksys.dto;
 
-import java.util.List;
 import java.util.Set;
 
 import com.cooksys.dto.datatype.Reference;
@@ -14,7 +13,7 @@ public class ProjectManagerDto {
 	
 	private String lastName;
 	
-	
+	private Set<Reference<Project, Long>> projects;
 
 	public Long getId() {
 		return id;
@@ -40,7 +39,13 @@ public class ProjectManagerDto {
 		this.lastName = lastName;
 	}
 
-	
+	public Set<Reference<Project, Long>> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Reference<Project, Long>> projects) {
+		this.projects = projects;
+	}
 
 	@Override
 	public int hashCode() {

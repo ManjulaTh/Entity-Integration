@@ -9,7 +9,7 @@ import com.cooksys.entity.Project;
 
 public interface ProjectRepository extends JpaRepository <Project, Long>{
 	
-	List<Project> findAllByManagerId(Long ProjectManagerId);
+	List<Project> findAllByProjectManagerId(Long ProjectManagerId);
 
 	List<Project> findByDueDateLessThan(Date date);
 

@@ -20,7 +20,7 @@ public class ProjectManager implements BaseEntity<Long>{
 	
 	private String lastName;
 	
-	@OneToMany(mappedBy = "manager")
+	@OneToMany(mappedBy = "projectManager")
 	private Set<Project> projects;
 
 	public Long getId() {
