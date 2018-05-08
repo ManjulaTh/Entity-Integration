@@ -74,6 +74,10 @@ public class ProjectManagerService {
 		return new OverdueProjectsDto(projectManagerId, (long) projectRepo.findByProjectManagerIdAndDueDateLessThan(projectManagerId, new Date()).size());
 		
 	}
+
+	public List<OverdueProjectsDto> getAllOverdueProjectsByManagers() {
+		return repo.findAll().stream().map(manager -> new OverdueProjectsDto(manager.getId(), (long) projectRepo.findByProjectManagerIdAndDueDateLessThan(manager.getId(), new Date()).size())).collect(Collectors.toList());
+	}
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.cooksys.controller;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cooksys.dto.OverdueProjectsDto;
 import com.cooksys.dto.ProjectDto;
 import com.cooksys.dto.ProjectManagerDto;
-import com.cooksys.mapper.OverdueProjectsMapper;
 import com.cooksys.mapper.ProjectManagerMapper;
 import com.cooksys.mapper.ProjectMapper;
 import com.cooksys.service.ProjectManagerService;
@@ -69,6 +69,11 @@ public class ProjectManagerController {
 	@GetMapping("{id}/overdue")
 	public OverdueProjectsDto getNoOfProjects(@PathVariable("id") Long projectManagerId) {
 		return projectManagerService.getNoOfOverdueProjects(projectManagerId);
+	}
+	
+	@GetMapping("overdue")
+	public List<OverdueProjectsDto> getAllOverdueProjectsByManagers(){ 
+		return projectManagerService.getAllOverdueProjectsByManagers();
 	}
 	
 	@PostMapping
