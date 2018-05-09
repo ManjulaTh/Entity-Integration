@@ -2,14 +2,21 @@ package com.cooksys.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 import com.cooksys.dto.datatype.Reference;
 import com.cooksys.entity.ProjectManager;
+import com.cooksys.validation.NotMoreThanTwentyYears;
 
 
 public class ProjectDto {
-	private Long id;
+	private Long id;	
+	@NotMoreThanTwentyYears(message = "Start Date must be in the range of -20 Years - Current Year - +10 Years")
 	private Date startDate;
+	@NotNull(message = "Must enter valid due date")
 	private Date dueDate;
+	@NotNull(message = "projectManager.notempty")
 	private Reference<ProjectManager, Long> projectManager;
 	
 	public Long getId() {

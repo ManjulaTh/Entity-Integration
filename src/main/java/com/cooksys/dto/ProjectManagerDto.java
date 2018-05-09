@@ -2,17 +2,23 @@ package com.cooksys.dto;
 
 import java.util.Set;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.cooksys.dto.datatype.Reference;
 import com.cooksys.entity.Project;
+import com.cooksys.validation.UniqueFirstAndLast;
 
+@UniqueFirstAndLast
 public class ProjectManagerDto {
 	
 	private Long id;
-	
+	@NotBlank(message = "firstName can not be blank")
 	private String firstName;
-	
+	@NotBlank(message = "lastName can not blank")
 	private String lastName;
-	
+	@Size(max = 3,message = "One manager can not have more than 3 projects")
 	private Set<Reference<Project, Long>> projects;
 
 	public Long getId() {

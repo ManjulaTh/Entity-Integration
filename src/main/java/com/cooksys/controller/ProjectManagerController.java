@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -78,7 +79,7 @@ public class ProjectManagerController {
 	
 	@PostMapping
 	@ApiOperation(value = "", nickname = "postNewProjectManager")
-	public Long post(@RequestBody @Validated ProjectManagerDto projectManagerDto, HttpServletResponse httpResponse) {
+	public Long post(@RequestBody @Valid @Validated ProjectManagerDto projectManagerDto, HttpServletResponse httpResponse) {
 		Long id = projectManagerService.post(projectManagerDto);
 		httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 		return id;
@@ -86,7 +87,7 @@ public class ProjectManagerController {
 	
 	@PutMapping("{id}")
 	@ApiOperation(value = "", nickname = "putProjectManagerWithId")
-	public void put(@PathVariable Long id, @RequestBody @Validated ProjectManagerDto projectManagerDto, HttpServletResponse httpResponse) {
+	public void put(@PathVariable Long id, @RequestBody @Valid @Validated ProjectManagerDto projectManagerDto, HttpServletResponse httpResponse) {
 		projectManagerService.put(id, projectManagerDto);
 	}
 	

@@ -3,6 +3,8 @@ package com.cooksys.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +31,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping
-	public void createProject(@RequestBody ProjectDto dto) {
+	public void createProject(@RequestBody @Valid ProjectDto dto) {
 		projectService.create(projectMapper.toEntity(dto));
 	}
 	

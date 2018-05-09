@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cooksys.dto.datatype.BaseEntity;
 
@@ -19,11 +22,12 @@ public class Project implements BaseEntity<Long>  {
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne	
 	private ProjectManager projectManager;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)	
 	private Date startDate;
+	
 	
 	@Temporal(TemporalType.DATE)
 	private Date dueDate;

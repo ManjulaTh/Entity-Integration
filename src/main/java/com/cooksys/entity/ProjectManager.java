@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.cooksys.dto.datatype.BaseEntity;
 
@@ -16,11 +19,13 @@ public class ProjectManager implements BaseEntity<Long>{
 	@GeneratedValue
 	private Long id;
 	
-	private String firstName;
 	
+	private String firstName;
+
 	private String lastName;
 	
 	@OneToMany(mappedBy = "projectManager")
+	
 	private Set<Project> projects;
 
 	public Long getId() {
