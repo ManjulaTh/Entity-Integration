@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.dto.OverdueProjectsDto;
@@ -76,8 +77,15 @@ public class ProjectManagerService {
 	}
 
 	public List<OverdueProjectsDto> getAllOverdueProjectsByManagers() {
-		return repo.findAll().stream().map(manager -> new OverdueProjectsDto(manager.getId(), (long) projectRepo.findByProjectManagerIdAndDueDateLessThan(manager.getId(), new Date()).size())).collect(Collectors.toList());
+		
+		//return repo.findAll().stream().map(manager -> new OverdueProjectsDto(manager.getId(), (long) projectRepo.findByProjectManagerIdAndDueDateLessThan(manager.getId(), new Date()).size())).collect(Collectors.toList());
+		return repo.findAll().stream().map(manager -> new OverdueProjectsDto(manager.getId(),
+				(long) projectRepo.findByProjectManagerIdAndDueDateLessThan(manager.getId(), new Date()).size()))
+				.sorted((o1, o2) -> o2.getNumberOfOverdueProjects().compareTo(o1.getNumberOfOverdueProjects()))
+				.collect(Collectors.toList());
 	}
+
+	
 	
 	
 }
